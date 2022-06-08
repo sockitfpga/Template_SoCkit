@@ -85,12 +85,5 @@ source files.qip
 
 set_global_assignment -name VERILOG_FILE sys/I2C_Controller.v
 set_global_assignment -name VERILOG_FILE sys/I2C_AV_Config.v
-#
-#Don't need following IS2 module if using internal I2S from HDMI
-# set_global_assignment -name VHDL_FILE sys/audio_i2s.vhd
-#Alternative I2S modules used by modernhackers
-# set_global_assignment -name VERILOG_FILE sys/audio_top.v
-# set_global_assignment -name VERILOG_FILE sys/audio_shifter.v
-
 
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
