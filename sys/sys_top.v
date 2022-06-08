@@ -1426,17 +1426,14 @@ csync csync_vga(clk_vid, vga_hs_osd, vga_vs_osd, vga_cs_osd);
 
 	assign VGA_VS = (VGA_EN | SW[3]) ? 1'bZ      :((((vga_fb | vga_scaler) ? ~vgas_vs : ~vga_vs) | csync_en) ^ VS[12]);
 	assign VGA_HS = (VGA_EN | SW[3]) ? 1'bZ      : (((vga_fb | vga_scaler) ? (csync_en ? ~vgas_cs : ~vgas_hs) : (csync_en ? ~vga_cs : ~vga_hs)) ^ HS[12]);
-	//assign VGA_R  = (VGA_EN | SW[3]) ? 6'bZZZZZZ :   (vga_fb | vga_scaler) ? vgas_o[23:18] : vga_o[23:18];
-	//assign VGA_G  = (VGA_EN | SW[3]) ? 6'bZZZZZZ :   (vga_fb | vga_scaler) ? vgas_o[15:10] : vga_o[15:10];
-	//assign VGA_B  = (VGA_EN | SW[3]) ? 6'bZZZZZZ :   (vga_fb | vga_scaler) ? vgas_o[7:2]   : vga_o[7:2]  ;
+	//DE10-standard / DE1-SoC / SoCkit implementation for on-board VGA DAC route - additional 2 bit per color
 	assign VGA_R  = (VGA_EN | SW[3]) ? 8'bZZZZZZZZ :   (vga_fb | vga_scaler) ? vgas_o[23:16] : vga_o[23:16];
 	assign VGA_G  = (VGA_EN | SW[3]) ? 8'bZZZZZZZZ :   (vga_fb | vga_scaler) ? vgas_o[15:8]  : vga_o[15:8] ;
 	assign VGA_B  = (VGA_EN | SW[3]) ? 8'bZZZZZZZZ :   (vga_fb | vga_scaler) ? vgas_o[7:0]   : vga_o[7:0]  ;
 	//DE10-standard / DE1-SoC / SoCkit implementation for on-board VGA DAC route - additional pins
 	assign VGA_BLANK_N = VGA_HS && VGA_VS;  //VGA DAC additional required pin
 	assign VGA_SYNC_N = 0; 					//VGA DAC additional required pin
-	assign VGA_CLK = HDMI_TX_CLK; 			//has to define a clock to VGA DAC clock otherwise the picture is noisy
- 
+	assign VGA_CLK = HDMI_TX_CLK; 			//has to define a clock to VGA DAC clock otherwise the picture is noisy 
 `endif
 
 reg video_sync = 0;
@@ -1550,6 +1547,7 @@ alsa alsa
 	.pcm_r(alsa_r)
 );
 
+
 //// DE10-Standard / DE1-SoC / SoCkit Audio CODEC
 
 assign AUD_MUTE    = 1'b1;
@@ -1567,45 +1565,6 @@ I2C_AV_Config audio_config (
   .oI2C_SCLK    (AUD_I2C_SCLK         ),
   .oI2C_SDAT    (AUD_I2C_SDAT         )
 );
-
-
-// // Alternative I2S module used in Neptuno / Deca
-// audio_top audio_i2s (
-// 	.clk_50MHz  (clk_audio  ),
-// 	.dac_MCLK   (AUD_XCK    ),
-// 	.dac_LRCK   (AUD_DACLRCK),
-// 	.dac_SCLK   (AUD_BCLK   ),
-// 	.dac_SDIN   (AUD_DACDAT ),
-// 	.L_data     (audio_l    ),
-// 	.R_data     (audio_r    )
-// );		
-
-
-// //Alternative modernhackers Audio implementation
-//
-// wire exchan;
-// wire mix;
-// assign exchan = 1'b0;
-// assign mix = 1'b0;
-// assign AUD_MUTE = 1'b1;
-//
-// audio_top audio_top (
-//   .clk          (clk_audio),  // input clock
-//   .rst_n        (!reset),		// active low reset (from reset button)
-//   // config
-//   .exchan       (exchan),		// switch audio left / right channel
-//   .mix          (mix),			// normal / centered mix (play some left channel on the right channel and vise-versa)
-//   // audio shifter
-//   .rdata        (audio_r),		// right channel sample data
-//   .ldata        (audio_l),		// left channel sample data
-//   .aud_bclk     (AUD_BCLK),	// CODEC data clock
-//   .aud_daclrck  (AUD_DACLRCK),// CODEC data clock
-//   .aud_dacdat   (AUD_DACDAT),	// CODEC data
-//   .aud_xck      (AUD_XCK),  	// CODEC data clock
-//   // I2C audio config
-//   .i2c_sclk     (I2C_SCLK),  	// CODEC config clock
-//   .i2c_sdat     (I2C_SDAT)   // CODEC config data
-// );
 
 
 ////////////////  User I/O (USB 3.0 connector) /////////////////////////
