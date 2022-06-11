@@ -1,7 +1,7 @@
 //============================================================================
 //
-//  DE10-Standard / DE1-SoC / Arrow SoCKit MiSTer hardware abstraction module 
-//  Ported 2022 by Somhic https://github.com/somhi
+//  Arrow SoCKit / DE10-Standard / DE1-SoC MiSTer hardware abstraction module 
+//  2022 by Somhic https://github.com/somhi, based on 2019 work by modernhackers
 //
 //  MiSTer hardware abstraction module
 //  (c)2017-2020 Alexey Melnikov
@@ -72,29 +72,24 @@ module sys_top
 
 `else
 	//////////// VGA ///////////
-	//DE10-nano board implementation contained 6 / color
-	//output  [5:0] VGA_R,
-	//output  [5:0] VGA_G,
-	//output  [5:0] VGA_B,
-	//SoCkit, DE10-standard, DE1-SoC implementation need to contain 8 bit color otherwise the brightness is low on the DAC
+	//SoCkit, DE10-standard, DE1-SoC implementation needs 8 bit color otherwise the brightness is low on the DAC
 	output  [7:0] VGA_R,
 	output  [7:0] VGA_G,
 	output  [7:0] VGA_B,
 	inout         VGA_HS,  // VGA_HS is secondary SD card detect when VGA_EN = 1 (inactive)
 	output		  VGA_VS,
-	//input      VGA_EN,  // active low
+	//input       VGA_EN,  // active low
 	//SoCkit, DE10-standard, DE1-SoC implementation for on-board VGA DAC route - additional pins
 	output 		  VGA_CLK,
 	output 		  VGA_BLANK_N,
 	output 		  VGA_SYNC_N,
 
 	/////////// AUDIO //////////
-	// output		  AUDIO_L,
-	// output		  AUDIO_R,
-	// output		  AUDIO_SPDIF,
+	output		  AUDIO_L,
+	output		  AUDIO_R,
+	output		  AUDIO_SPDIF,
 
-	//SoCkit, DE10-standard, DE1-SoC implementation for on-board Audio CODEC
-	// Audio CODEC
+	//SoCkit, DE10-standard, DE1-SoC implementation for on-board AUDIO CODEC
 	inout wire    AUD_ADCLRCK,  // Audio CODEC ADC LR Clock
 	input wire    AUD_ADCDAT,   // Audio CODEC ADC Data
 	inout wire    AUD_DACLRCK,  // Audio CODEC DAC LR Clock
@@ -102,15 +97,14 @@ module sys_top
     inout wire    AUD_BCLK,     // Audio CODEC Bit-Stream Clock
     output wire   AUD_XCK,      // Audio CODEC Chip Clock
     output wire   AUD_MUTE,		// Audio CODEC Mute (active low)
-
 	// I2C Audio CODEC
     inout wire    AUD_I2C_SDAT,     // I2C Data
     output wire   AUD_I2C_SCLK,     // I2C Clock
 
 	//////////// SDIO ///////////
-	// inout   [3:0] SDIO_DAT,
-	// inout         SDIO_CMD,
-	// output        SDIO_CLK,
+	inout   [3:0] SDIO_DAT,
+	inout         SDIO_CMD,
+	output        SDIO_CLK,
 
 	//////////// I/O ///////////
 	output        LED_USER,
@@ -127,9 +121,9 @@ module sys_top
 	// output        SD_SPI_CLK,
 	// output        SD_SPI_MOSI,
 
-	// inout         SDCD_SPDIF,
-	// output        IO_SCL,
-	// inout         IO_SDA,
+	inout         SDCD_SPDIF,
+	output        IO_SCL,
+	inout         IO_SDA,
 
 	////////// ADC //////////////
 	// output        ADC_SCK,
@@ -141,33 +135,29 @@ module sys_top
 	input   [1:0] KEY,
 
 	////////// MB SWITCH ////////
-	//SoCkit, DE10-standard, DE1-SoC board implementation
 	//input   [3:0] SW,
-	inout   [3:0] SW,				// TO BE FIXED
+	//SoCkit, DE10-standard, DE1-SoC board implementation
+	inout   [3:0] SW,
 
 	////////// MB LED ///////////
 	//output  [7:0] LED
-	output LED0
+	//SoCkit, DE10-standard, DE1-SoC board implementation
+	output LED_0_USER,
+	output LED_1_HDD,
+	output LED_2_POWER,
+	output LED_3_LOCKED,
 
 	///////// USER IO ///////////
-	//inout   [6:0] USER_IO
+	inout   [6:0] USER_IO
 );
 
-// DE10-Standard / DE1-SoC / Arrow SoCKit VGA mode
-assign SW[3] = 1'b0;		//necessary for VGA mode
-
-// DE10-Standard / DE1-SoC / SoCKit implementation for on-board VGA DAC route - this will be overrided by code to set value to 0
-wire   VGA_EN;  // active low
-assign VGA_EN = 1'b0;		//enable VGA mode when VGA_EN is low
-
+//SoCkit, DE10-standard, DE1-SoC board implementation
 wire        HDMI_TX_CLK;
 wire        HDMI_TX_DE;
 wire [23:0] HDMI_TX_D;
 wire        HDMI_TX_HS;
 wire        HDMI_TX_VS;
 wire        HDMI_TX_INT;
-
-
 wire        HDMI_I2C_SCL;
 wire        HDMI_I2C_SDA;
 wire        HDMI_MCLK;
@@ -180,28 +170,24 @@ wire        ADC_SDO;
 wire        ADC_SDI;
 wire        ADC_CONVST;
 
-wire		AUDIO_L;
-wire		AUDIO_R;
-wire		AUDIO_SPDIF;
-
 wire        SD_SPI_CS;
 wire        SD_SPI_MISO;
 wire        SD_SPI_CLK;
 wire        SD_SPI_MOSI;
 
-wire        SDCD_SPDIF;
-wire        IO_SCL;
-wire        IO_SDA;
-
-wire   [3:0] SDIO_DAT;
-wire         SDIO_CMD;
-wire         SDIO_CLK;
-
-wire   [6:0] USER_IO;
-
 wire   [7:0] LED;
 
-assign LED0 = LED[0];
+assign LED_0_USER   = LED[0];
+assign LED_1_HDD    = LED[2];
+assign LED_2_POWER  = LED[4];
+assign LED_3_LOCKED = LED[6];
+
+// DE10-Standard / DE1-SoC / SoCKit implementation for on-board VGA DAC route - this will be overrided by code to set value to 0
+wire   VGA_EN;  // active low
+assign VGA_EN = 1'b0;		//enable VGA mode when VGA_EN is low
+
+// DE10-Standard / DE1-SoC / Arrow SoCKit VGA mode
+assign SW[3] = 1'b0;		//necessary for VGA mode
 
 
 //////////////////////  Secondary SD  ///////////////////////////////////
@@ -1548,7 +1534,7 @@ alsa alsa
 );
 
 
-//// DE10-Standard / DE1-SoC / SoCkit Audio CODEC
+//// DE10-Standard / DE1-SoC / SoCkit Audio CODEC implementation
 
 assign AUD_MUTE    = 1'b1;
 assign AUD_XCK     = HDMI_MCLK;
