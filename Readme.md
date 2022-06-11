@@ -1,4 +1,4 @@
-# Template core for SoCkit (MiSTer)
+# Template core for MiSTer
 
 ## General description
 This core contains the latest version of framework and will be updated when framework is updated. There will be no releases. This core is only for developers. Besides the framework, core demonstrates the basic usage. New or ported cores should use it as a template.
@@ -23,7 +23,6 @@ It's highly recommended to follow the notes to keep it standardized for easier m
 * `<core_name>.sv` - glue logic between framework and core. This is where you adapt core specific signals to framework.
 * `files.qip` - list of all core files. You need to edit it manually to add/remove files. Quartus will use this file but can't edit it. If you add files in Quartus IDE, then they will be added to `<core_name>.qsf` which is recommended manually move them to `files.qip`.
 * `clean.bat` - windows batch file to clean the whole project from temporary files. In most cases you don't need to modify it.
-* `clean.sh` - Linux script file to clean the whole project from temporary files. In most cases you don't need to modify it.
 * `.gitignore` - list of files should be ignored by git, so temporary files wont be included in commits.
 * `jtag.cdf` - it will be produced when you compile the core. By clicking it in Quartus IDE, you will launch programmer where you can send the core to MiSTer over USB blaster cable (see manual for DE10-nano how to connect it). This file normally is not present on cleaned project and not included in commits.
 
@@ -43,13 +42,7 @@ USE_DDRAM      | Enables DDRAM ports of emu instance
 USE_SDRAM      | Enables SDRAM ports of emu instance
 USE_FB         | Allows to use framebuffer from the core
 
-# Quartus version
 
+# Quartus version
 Cores must be developed in **Quartus v17.0.x**. It's recommended to have updates, so it will be **v17.0.2**. Newer versions won't give any benefits to FPGA used in MiSTer, however they will introduce incompatibilities in project settings and it will make harder to maintain the core and collaborate with others. **So please stick to good old 17.0.x version.** You may use either Lite or Standard license.
 
-
-
-### TO DO List
-
-* clean.sh Adapt Linux version of the clean.bat
-* mycore.qsf  uncomment Mister global assignments not used by modernhackers
