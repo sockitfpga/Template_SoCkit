@@ -49,13 +49,24 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to USER_IO[*]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to USER_IO[*]
 set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to USER_IO[*]
 
-# HSMC J3 connector pin 7   JOY1_B2_P9;  HSMC_TX _p[7] PIN_C3  USER_IO[6] C
-# HSMC J3 connector pin 8   JOY1_B1_P6;  HSMC_RX _p[6] PIN_H8  USER_IO[2] B
-# HSMC J3 connector pin 9   JOY1_UP;     HSMC_TX _n[6] PIN_D4  USER_IO[1]
-# HSMC J3 connector pin 10  JOY1_DOWN;   HSMC_RX _n[5] PIN_H7  USER_IO[0]
-# HSMC J3 connector pin 13  JOY1_LEFT;   HSMC_TX _p[6] PIN_E4  USER_IO[5]
-# HSMC J3 connector pin 14  JOY1_RIGHT;  HSMC_RX _p[5] PIN_J7  USER_IO[3]
-# HSMC J3 connector pin 15  JOYX_SEL_O;  HSMC_TX _n[5] PIN_E2  USER_IO[4]
+# HSMC J3 connector pin 7   JOY1_B2_P9;  HSMC_TX _p[7] PIN_C3  USER_IO[6] (sega C)
+# HSMC J3 connector pin 8   JOY1_B1_P6;  HSMC_RX _p[6] PIN_H8  USER_IO[2] (sega B) 	//WSEL
+# HSMC J3 connector pin 9   JOY1_UP;     HSMC_TX _n[6] PIN_D4  USER_IO[1]			//MIDI OUT
+# HSMC J3 connector pin 10  JOY1_DOWN;   HSMC_RX _n[5] PIN_H7  USER_IO[0] 			//SDA
+# HSMC J3 connector pin 13  JOY1_LEFT;   HSMC_TX _p[6] PIN_E4  USER_IO[5]			//DAT
+# HSMC J3 connector pin 14  JOY1_RIGHT;  HSMC_RX _p[5] PIN_J7  USER_IO[3]			//SCL
+# HSMC J3 connector pin 15  JOYX_SEL_O;  HSMC_TX _n[5] PIN_E2  USER_IO[4]			//BLCK
+
+# // Pin | USB Name |   |Signal
+# // ----+----------+---+-------------
+# // 0   | D+       | I |RX
+# // 1   | D-       | O |TX
+# // 2   | TX-      | O |RTS
+# // 3   | GND_d    | I |CTS
+# // 4   | RX+      | O |DTR
+# // 5   | RX-      | I |DSR
+# // 6   | TX+      | I |DCD
+# //
 
 #============================================================
 # SDIO_CD or SPDIF_OUT                 (DE10-nano Arduino_IO) 
