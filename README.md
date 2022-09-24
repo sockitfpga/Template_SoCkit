@@ -1,4 +1,10 @@
-# Template core for [SoCkit (MiSTer) Platform](https://github.com/sockitfpga/MiSTer_SoCkit) 
+# Atari 800/800XL/65XE/130XE and Atari 5200 for [SoCkit (MiSTer) Platform](https://github.com/sockitfpga/MiSTer_SoCkit) 
+
+Ported by Somhic from https://github.com/MiSTer-devel/Template_MiSTer
+
+Follows original README.
+
+# Template core for MiSTer
 
 ## General description
 This core contains the latest version of framework and will be updated when framework is updated. There will be no releases. This core is only for developers. Besides the framework, core demonstrates the basic usage. New or ported cores should use it as a template.
