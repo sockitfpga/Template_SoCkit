@@ -1,6 +1,6 @@
-# Atari 800/800XL/65XE/130XE and Atari 5200 for [SoCkit (MiSTer) Platform](https://github.com/sockitfpga/MiSTer_SoCkit) 
+# Template core for [SoCkit (MiSTer) Platform](https://github.com/sockitfpga/MiSTer_SoCkit) 
 
-Ported by Somhic from https://github.com/MiSTer-devel/Template_MiSTer
+Ported by @somhi from https://github.com/MiSTer-devel/Template_MiSTer
 
 Follows original README.
 

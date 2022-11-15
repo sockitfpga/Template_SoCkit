@@ -89,7 +89,7 @@ module sys_top
 	output		  AUDIO_R,
 	output		  AUDIO_SPDIF,
 
-	//SoCkit, DE10-standard, DE1-SoC implementation for on-board AUDIO CODEC
+	//AUDIO CODEC implementation: SSM2603 for Arrow SoCkit, Wolfson WM8731 for DE10-standard & DE1-SoC
 	inout wire    AUD_ADCLRCK,  // Audio CODEC ADC LR Clock
 	input wire    AUD_ADCDAT,   // Audio CODEC ADC Data
 	inout wire    AUD_DACLRCK,  // Audio CODEC DAC LR Clock
@@ -1534,7 +1534,7 @@ alsa alsa
 );
 
 
-//// DE10-Standard / DE1-SoC / SoCkit Audio CODEC implementation
+//// Arrow SoCkit SSM2603 Audio CODEC implementation & configuration
 
 assign AUD_MUTE    = 1'b1;
 assign AUD_XCK     = HDMI_MCLK;
@@ -1548,8 +1548,8 @@ I2C_AV_Config audio_config (
   .iCLK         (clk_audio        ),
   .iRST_N       (!reset           ),
   // i2c side
-  .oI2C_SCLK    (AUD_I2C_SCLK         ),
-  .oI2C_SDAT    (AUD_I2C_SDAT         )
+  .oI2C_SCLK    (AUD_I2C_SCLK     ),
+  .oI2C_SDAT    (AUD_I2C_SDAT     )
 );
 
 
