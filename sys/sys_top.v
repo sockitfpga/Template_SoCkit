@@ -1534,7 +1534,7 @@ alsa alsa
 );
 
 
-//// Arrow SoCkit SSM2603 Audio CODEC implementation & configuration
+//AUDIO CODEC implementation & configuration: SSM2603 for Arrow SoCkit and compatible Wolfson WM8731 for DE10-standard & DE1-SoC
 
 assign AUD_MUTE    = 1'b1;
 assign AUD_XCK     = HDMI_MCLK;
