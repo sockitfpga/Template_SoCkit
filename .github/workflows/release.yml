@@ -25,7 +25,7 @@ jobs:
 
       # 2 - RTL synthesis
       - name: Run compilation flow
-        run: quartus_sh --flow compile PCXT.qpf
+        run: quartus_sh --flow compile mycore.qpf
 
       # 3 - Set current date for tagging binary
       - name: Set current date
@@ -35,7 +35,7 @@ jobs:
       # 4 - Create a copy and tag with date
       - name: Create a copy and tag with date
         run: |
-          cp output_files/PCXT.rbf output_files/PCXT_${{ steps.date.outputs.date }}.rbf
+          cp output_files/mycore.rbf output_files/mycore_${{ steps.date.outputs.date }}.rbf
 
       # 5 - Upload artifacts
       - name: Upload artifacts
@@ -50,19 +50,19 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            output_files/PCXT_${{ steps.date.outputs.date }}.rbf
+            output_files/mycore_${{ steps.date.outputs.date }}.rbf
     
       # [Do not work. Error: Not a git repository]
       # Check  https://github.com/MiSTer-DB9/Genesis_MiSTer/tree/master/.github  for a way to push releases
       # # 7 - Add bitstream file to release folder   
       # - name: Commit Binary to Repository
       #   run: |
-      #     cp output_files/PCXT.rbf releases/PCXT_${{ steps.date.outputs.date }}.rbf
+      #     cp output_files/mycore.rbf releases/mycore_${{ steps.date.outputs.date }}.rbf
       #     git fetch
       #     git checkout -b main
       #     git config user.name github-actions
       #     git config user.email github-actions@github.com
-      #     git add release/PCXT_${{ steps.version.outputs.version }}.rbf
+      #     git add release/mycore_${{ steps.version.outputs.version }}.rbf
       #     git commit -m "Release ${{ steps.version.outputs.version }}"
       #     git push origin main
           
