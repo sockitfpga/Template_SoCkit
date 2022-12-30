@@ -1,3 +1,9 @@
+# Template core for [SoCkit (MiSTer) Platform](https://github.com/sockitfpga/MiSTer_SoCkit) 
+
+Ported by @somhi from https://github.com/MiSTer-devel/Template_MiSTer
+
+Follows original README.
+
 # Template core for MiSTer
 
 ## General description
