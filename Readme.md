@@ -29,6 +29,7 @@ It's highly recommended to follow the notes to keep it standardized for easier m
 * `<core_name>.sv` - glue logic between framework and core. This is where you adapt core specific signals to framework.
 * `files.qip` - list of all core files. You need to edit it manually to add/remove files. Quartus will use this file but can't edit it. If you add files in Quartus IDE, then they will be added to `<core_name>.qsf` which is recommended manually move them to `files.qip`.
 * `clean.bat` - windows batch file to clean the whole project from temporary files. In most cases you don't need to modify it.
+* `clean.sh` - Linux script file to clean the whole project from temporary files. In most cases you don't need to modify it.
 * `.gitignore` - list of files should be ignored by git, so temporary files wont be included in commits.
 * `jtag.cdf` - it will be produced when you compile the core. By clicking it in Quartus IDE, you will launch programmer where you can send the core to MiSTer over USB blaster cable (see manual for DE10-nano how to connect it). This file normally is not present on cleaned project and not included in commits.
 
